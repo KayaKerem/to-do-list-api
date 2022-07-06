@@ -79,7 +79,7 @@ class ArticleController extends Controller
     public function update(Request $request, Article $article)
     {
 
-        $share = Url::find($article)->update([
+        $share = Article::find($article)->update([
             'name' => $request->get('title'),
             'urls'=> $request->get('description'),
 
