@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateRequest;
+use App\Http\Resources\TodolistResource;
 use App\Models\Todolist;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class TodolistController extends Controller
      */
     public function index()
     {
-        return Todolist::all();
+        return TodolistResource::collection(Todolist::all());
     }
 
     /**
@@ -41,7 +42,7 @@ class TodolistController extends Controller
 
         $data = auth()->user()->articles()->create($request->validated());
 
-        return Response::json($data,201);;
+        return new TodolistResource($data);
 
     }
 
@@ -83,7 +84,7 @@ class TodolistController extends Controller
 
         ]);
 
-        return Response::json($share,201);
+        return response()->json(null, 201);
     }
 
     /**
@@ -96,6 +97,6 @@ class TodolistController extends Controller
     {
 //        $data = Todolist::findorFail($article);
         $todolist->delete();
-        return Response::json(["status"=>201],201);
+        return response()->json(null, 204);
     }
 }
