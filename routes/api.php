@@ -18,8 +18,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/article/store',[App\Http\Controllers\ArticleController::class,'store']);
-Route::get('/article/{article}',[App\Http\Controllers\ArticleController::class,'show']);
-Route::get('/article',[App\Http\Controllers\ArticleController::class,'index']);
-Route::patch('/article/update/{article}',[\App\Http\Controllers\ArticleController::class,'update']);
-Route::delete('/article/destroy/{article}',[\App\Http\Controllers\ArticleController::class,'destroy']);
+Route::post('/article/store',[App\Http\Controllers\TodolistController::class,'store']);
+Route::get('/article/{article}',[App\Http\Controllers\TodolistController::class,'show']);
+Route::get('/article',[App\Http\Controllers\TodolistController::class,'index']);
+Route::patch('/article/update/{article}',[\App\Http\Controllers\TodolistController::class,'update']);
+Route::delete('/article/destroy/{article}',[\App\Http\Controllers\TodolistController::class,'destroy']);

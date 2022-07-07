@@ -42,6 +42,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     public function articles(){
-        return $this->hasMany(Article::class)->orderBy('created_at','DESC');
+        return $this->hasMany(Todolist::class)->orderBy('created_at','DESC');
     }
 }

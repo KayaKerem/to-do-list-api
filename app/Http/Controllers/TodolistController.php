@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateRequest;
-use App\Models\Article;
+use App\Models\Todolist;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class ArticleController extends Controller
+class TodolistController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +16,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        return Article::all();
+        return Todolist::all();
     }
 
     /**
@@ -34,37 +35,34 @@ class ArticleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateRequest $request)
+    public function store(CreateRequest $request) : JsonResponse
     {
-        $data = $request->validated();
+//        $data = $request->validated();
 
-        auth()->user()->articles()->create([
-            'title' => $data['title'],
-            'description' => $data['description'],
-        ]);
+        $data = auth()->user()->articles()->create($request->validated());
 
-        return true;
+        return Response::json($data,201);;
 
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Article  $article
+     * @param  \App\Models\Todolist  $todolist
      * @return \Illuminate\Http\Response
      */
-    public function show(Article $article)
+    public function show(Todolist $todolist): Todolist
     {
-        return $article;
+        return $todolist;
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Article  $article
+     * @param  \App\Models\Todolist  $todolist
      * @return \Illuminate\Http\Response
      */
-    public function edit(Article $article)
+    public function edit(Todolist $todolist)
     {
         //
     }
@@ -73,31 +71,31 @@ class ArticleController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Article  $article
+     * @param  \App\Models\Todolist  $todolist
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Article $article)
+    public function update(CreateRequest $request, Todolist $todolist):JsonResponse
     {
 
-        $share = Article::find($article)->update([
+        $share = Todolist::find($todolist)->update([
             'name' => $request->get('title'),
             'urls'=> $request->get('description'),
 
         ]);
 
-        return true;
+        return Response::json($share,201);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Article  $article
+     * @param  \App\Models\Todolist  $todolist
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Article $article)
+    public function destroy(Todolist $todolist): JsonResponse
     {
-        $data = Article::findorFail($article);
-        $data->delete();
-        return true;
+//        $data = Todolist::findorFail($article);
+        $todolist->delete();
+        return Response::json(["status"=>201],201);
     }
 }
