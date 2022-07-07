@@ -15,6 +15,10 @@ class TodolistController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct(){
+        $this->middleware('auth')->except(['index', 'show']);
+    }
     public function index()
     {
         return TodolistResource::collection(Todolist::all());
@@ -52,9 +56,9 @@ class TodolistController extends Controller
      * @param  \App\Models\Todolist  $todolist
      * @return \Illuminate\Http\Response
      */
-    public function show(Todolist $todolist): Todolist
+    public function show(Todolist $todolist): JsonResponse
     {
-        return $todolist;
+        return TodolistResource($todolist);
     }
 
     /**
