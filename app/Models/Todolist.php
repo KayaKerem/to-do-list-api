@@ -10,7 +10,7 @@ class Todolist extends Model
 {
     use HasFactory;
 
-    protected $fillable=["title","description"];
+    protected $fillable = ["user_id", "title", "description"];
 
     public function user(): BelongsTo
     {

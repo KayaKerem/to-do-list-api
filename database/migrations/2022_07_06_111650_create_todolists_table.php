@@ -15,6 +15,7 @@ class CreateTodolistsTable extends Migration
     {
         Schema::create('todolists', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger("user_id");
             $table->string("title");
             $table->string("description");
             $table->timestamps();
