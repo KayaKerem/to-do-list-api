@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TodoListRequest;
+use App\Http\Resources\ProfileResource;
 use App\Http\Resources\TodolistResource;
 use App\Models\Todolist;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
@@ -48,4 +50,5 @@ class TodolistController extends Controller
 
         return response()->json(null, 204);
     }
+
 }

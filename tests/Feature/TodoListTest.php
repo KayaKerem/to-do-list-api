@@ -36,7 +36,7 @@ class TodoListTest extends TestCase
         $this->assertEquals(1, $todolist);
     }
 
-    public function test_show_todolist()
+    public function testShowTodoLists()
     {
         $user = User::factory()->create();
 
@@ -49,7 +49,7 @@ class TodoListTest extends TestCase
             ->assertSee($todolist->title);
     }
 
-    public function test_index_todolists()
+    public function testIndexTodolists()
     {
         $user = User::factory()->create();
 
@@ -62,7 +62,7 @@ class TodoListTest extends TestCase
             ->assertStatus(200);
     }
 
-    public function test_update_todolist()
+    public function testUpdateTodolists()
     {
         $user = User::factory()->create();
 
@@ -81,7 +81,7 @@ class TodoListTest extends TestCase
         $this->assertDatabaseHas('todolists', ['title' => $payload['title']]);
     }
 
-    public function test_delete_todolists()
+    public function testDeleteTodolists()
     {
         $user = User::factory()->create();
 
@@ -95,4 +95,5 @@ class TodoListTest extends TestCase
 
         $this->assertEquals(0, Todolist::count());
     }
+
 }
