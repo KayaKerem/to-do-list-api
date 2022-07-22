@@ -68,7 +68,9 @@ class TodoListTest extends TestCase
 
         $this->actingAs($user);
 
-        $todolist = Todolist::factory()->create();
+        $todolist = Todolist::factory()->create([
+            'user_id'  => $user->id
+        ]);
 
         $payload = [
             'title' => 'new test title',

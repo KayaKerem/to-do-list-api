@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TodoListRequest;
-use App\Http\Resources\ProfileResource;
 use App\Http\Resources\TodolistResource;
 use App\Models\Todolist;
-use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
@@ -36,6 +34,8 @@ class TodolistController extends Controller
 
     public function update(TodoListRequest $request, Todolist $todolist): JsonResponse
     {
+        $this->authorize('update', $todolist); // policyi controllerda tanımlamak
+
         $todolist->update([
             'title' => $request->get('title'),
             'description' => $request->get('description'),
@@ -50,5 +50,4 @@ class TodolistController extends Controller
 
         return response()->json(null, 204);
     }
-
 }
