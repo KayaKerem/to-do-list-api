@@ -17,6 +17,10 @@ class TodolistController extends Controller
 
     public function index(): AnonymousResourceCollection
     {
+        $searchQuerey = request()->query('search');
+        if($searchQuerey !=null){
+            return TodolistResource::collection(Todolist::query()->where('title', 'LIKE', $searchQuerey.'%')->get());
+        }
         return TodolistResource::collection(Todolist::all());
     }
 

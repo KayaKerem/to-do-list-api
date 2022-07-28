@@ -23,11 +23,14 @@ Route::group([
     ], function () {
 //        Route::apiResource('todolists', TodolistController::class);
         Route::get('/profile/{user}', [\App\Http\Controllers\ProfileController::class, 'profile']);
+        Route::get('/user/', [\App\Http\Controllers\ProfileController::class, 'index']);
+
     }
     );
 
     Route::group([
     ],function (){
+
         Route::apiResource('todolists', TodolistController::class);
 
     });
