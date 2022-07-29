@@ -17,11 +17,25 @@ class TodolistController extends Controller
 
     public function index(): AnonymousResourceCollection
     {
-        $searchQuerey = request()->query('search');
-        if($searchQuerey !=null){
-            return TodolistResource::collection(Todolist::query()->where('title', 'LIKE', $searchQuerey.'%')->get());
+        $todolists = Todolist::query();
+
+        if (request()->exists('search')) {
+            $searchQuerey = request()->query('search');
+            $todolists =  $todolists->where(function ($query) use ($searchQuerey) {
+                $query->where('title', 'LIKE', "%{$searchQuerey}%")
+                    ->orwhere('description', 'LIKE', "%{$searchQuerey}%")
+                    ->orWhereHas('user',function ($query) use ($searchQuerey){
+                        $query->where('username','LIKE',"%{$searchQuerey}%");
+                    } );
+            });
         }
-        return TodolistResource::collection(Todolist::all());
+
+        if(request()->exists('user_id')){
+            $filterUserIdQuery = request()->query('user_id');
+            $todolists = $todolists->where('user_id','=',$filterUserIdQuery);
+        }
+
+        return TodolistResource::collection($todolists->get());
     }
 
     public function store(TodoListRequest $request): JsonResponse

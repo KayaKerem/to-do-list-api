@@ -98,4 +98,19 @@ class TodoListTest extends TestCase
         $this->assertEquals(0, Todolist::count());
     }
 
+    public function testSearchQuery()
+    {
+        $user = User::factory()->create(['is_admin' => true]);
+        $this->actingAs($user);
+
+        Todolist::factory()->count(50)->create();
+        Todolist::factory()->create(['title' => 'abcdefg','user_id'=>1]);
+        Todolist::factory()->create(['title' => 'zxcvbn','user_id'=>15]);
+
+        $this->get('/api/todolists?search=bcd&user_id=1')->assertStatus(200)
+            ->assertJsonCount(1,'data');
+        $this->get('/api/todolists?search=xcv&user_id=15')->assertStatus(200)
+            ->assertJsonCount(1,'data');
+    }
+
 }

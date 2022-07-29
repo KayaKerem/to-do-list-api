@@ -4,27 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\ProfileResource;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ProfileController extends Controller
 {
-    public function profile(User $user){
-
-
+    public function profile(User $user): JsonResponse
+    {
         return response()->json(new ProfileResource($user));
     }
 
-    public function index(Request $request){
+    public function index(Request $request): AnonymousResourceCollection
+    {
 
 
-        $searchQuerey = $request->query('is_admin');
-        if($searchQuerey != null){
-            return ProfileResource::collection(User::query()->where('is_admin', 'LIKE', $searchQuerey)->get());
+        $userQuery = User::query();
+
+        if ($request->exists('is_admin')) {
+            $userQuery = $userQuery->where('is_admin', '=', $request->query('is_admin'));
         }
 
-        return ProfileResource::collection(User::all());
+        return ProfileResource::collection($userQuery->get());
     }
-
-
 }
