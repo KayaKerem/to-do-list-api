@@ -27,4 +27,7 @@ class ProfileController extends Controller
 
         return ProfileResource::collection($userQuery->get());
     }
+
+
+
 }

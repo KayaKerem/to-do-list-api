@@ -22,6 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'is_admin',
+        'image',
         'verification_number'
 
     ];
@@ -51,4 +52,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Todolist::class)->orderBy('created_at', 'DESC');
     }
+
+//    public function profileImage(){
+//        return ($this->image) ? '/storage/' . $this->image : 'https://instastatistics.com/images/default_avatar.jpg';
+//    }
 }

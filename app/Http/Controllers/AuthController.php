@@ -7,24 +7,25 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Resources\ProfileResource;
 use App\Models\User;
-use App\Notifications\EmailNotification;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Notification;
+
 
 class AuthController extends Controller
 {
     public function register(RegisterRequest $request): JsonResponse
     {
-
         $request->validated();
+
+        $newPath = $request->image->store('/profile' );
+
         $user = User::create([
             'name' => $request['name'],
             'email' => $request['email'],
             'password' => bcrypt($request['password']),
             'is_admin'=>$request['is_admin'],
+            'image'=>$newPath,
             'verification_number'=>strval(random_int(100000, 999999))
         ]);
-
 
         event(new UserRegistered($user));
 

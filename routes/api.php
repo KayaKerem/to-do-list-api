@@ -24,7 +24,7 @@ Route::group([
 //        Route::apiResource('todolists', TodolistController::class);
         Route::get('/profile/{user}', [\App\Http\Controllers\ProfileController::class, 'profile']);
         Route::get('/user/', [\App\Http\Controllers\ProfileController::class, 'index']);
-
+        Route::get('/admin/userdatas/',[\App\Http\Controllers\DataController::class,'index']);
     }
     );
 
@@ -32,6 +32,7 @@ Route::group([
     ],function (){
 
         Route::apiResource('todolists', TodolistController::class);
+
 
     });
 
